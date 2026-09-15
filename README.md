@@ -2,7 +2,7 @@
 
 > **Disciplina:** Linguagem e Técnicas de Programação  
 > **Professor:** Dacio Machado  
-> **Curso:** Engenharia de Software / Análise e Desenvolvimento de Sistemas  
+> **Curso:** Engenharia de Software 
 
 ---
 
