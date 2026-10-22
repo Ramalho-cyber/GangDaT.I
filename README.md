@@ -15,6 +15,25 @@ Diferente de agendas convencionais que exigem o cadastro diário de obrigações
 Além da gestão de rotinas fixas, a aplicação oferece recursos completos de agenda tradicional, como visualização de calendário, cadastro de novos compromissos eventuais e persistência de dados em arquivo.
 
 ---
+## 🎯 Problema e Solução Proposta
+
+* **Problema:** A maioria dos aplicativos de agenda exige que tarefas frequentes sejam cadastradas manualmente dia após dia, gerando retrabalho e desorganização para estudantes e profissionais com rotinas semanais bem definidas.
+* **Solução:** O Schedula automatiza a gestão semanal unindo um módulo de **atividades recorrentes** (por dia da semana) a um módulo de **compromissos pontuais/eventuais** (atrelados a datas específicas).
+
+---
+
+## ✨ Funcionalidades Principais
+
+- [x] **Gerenciamento de Rotina Recorrente:**
+  - Cadastro, listagem, edição e remoção de atividades fixas por dia da semana (Segunda a Domingo).
+- [x] **Gestão de Compromissos Eventuais:**
+  - Adição de novos compromissos pontuais fora da rotina padrão (com data e horário específicos).
+- [x] **Visualização de Calendário e Agenda:**
+  - Consulta integrada da rotina do dia combinada com os compromissos agendados para a data.
+- [x] **Persistência de Dados (Arquivos):**
+  - Salvamento e leitura automática de dados em arquivos externos (`.txt` / `.dat`), garantindo a preservação das informações entre execuções.
+- [x] **Tratamento de Erros e Validações:**
+  - Mensagens claras para falhas de abertura de arquivo, alocação de memória e pesquisas sem resultados.
 
 ---
 
