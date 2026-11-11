@@ -4,11 +4,14 @@
 #include "compromissos.h"
 #include "rotinas.h"
 
+/* ---------- Cadastro ---------- */
+
 void cadastrarCompromisso() {
-    system("cls");
     Compromisso c;
 
-    printf("--- Cadastro de Compromisso Eventual ---\n");
+    limparTela();
+    puts("--- Cadastro de Compromisso Eventual ---");
+
     printf("Data (DD MM AAAA): ");
     scanf("%d %d %d", &c.dia, &c.mes, &c.ano);
 
@@ -23,96 +26,111 @@ void cadastrarCompromisso() {
 
 void salvarCompromissoNoArquivo(Compromisso c) {
     FILE *file = fopen(ARQ_COMPROMISSOS, "ab");
-    if (file == NULL) {
-        printf("\n[Erro crítico] Não foi possível abrir o arquivo de compromissos para gravação!\n");
-        system("pause");
+
+    if (!file) {
+        puts("\n[Erro crítico] Não foi possível abrir o arquivo de compromissos para gravação!");
+        pausar();
         return;
     }
+
     fwrite(&c, sizeof(Compromisso), 1, file);
     fclose(file);
-    printf("\n[Sucesso] Compromisso pontual salvo com sucesso!\n");
-    system("pause");
+
+    puts("\n[Sucesso] Compromisso pontual salvo com sucesso!");
+    pausar();
 }
 
+/* ---------- Listagem ---------- */
+
 void listarCompromissos() {
-    system("cls");
+    limparTela();
+
     FILE *file = fopen(ARQ_COMPROMISSOS, "rb");
-    if (file == NULL) {
-        printf("\n[Aviso] Nenhum compromisso eventual cadastrado.\n");
-        system("pause");
+    if (!file) {
+        puts("\n[Aviso] Nenhum compromisso eventual cadastrado.");
+        pausar();
         return;
     }
 
     Compromisso c;
-    printf("========================================\n");
-    printf("      COMPROMISSOS PONTUAIS CADASTRADOS \n");
-    printf("========================================\n");
-
     int encontrados = 0;
-    while (fread(&c, sizeof(Compromisso), 1, file) == 1) {
-        printf("Data: %02d/%02d/%d às %02d:%02d -> %s\n", c.dia, c.mes, c.ano, c.hora, c.minuto, c.descricao);
-        encontrados++;
+
+    imprimirSeparador();
+    puts("      COMPROMISSOS PONTUAIS CADASTRADOS ");
+    imprimirSeparador();
+
+    for (; fread(&c, sizeof(Compromisso), 1, file) == 1; encontrados++) {
+        printf("Data: %02d/%02d/%d às %02d:%02d -> %s\n",
+               c.dia, c.mes, c.ano, c.hora, c.minuto, c.descricao);
     }
     fclose(file);
 
-    if (encontradas == 0) {
-        printf("Nenhum compromisso cadastrado.\n");
+    if (!encontrados) {
+        puts("Nenhum compromisso cadastrado.");
     }
+
     printf("\n");
-    system("pause");
+    pausar();
 }
 
+/* ---------- Agenda do dia ---------- */
+
 void visualizarAgendaDia() {
-    system("cls");
     int d, m, a, diaSemanaFiltro;
 
-    printf("--- Visualizar Agenda do Dia ---\n");
+    limparTela();
+    puts("--- Visualizar Agenda do Dia ---");
+
     printf("Informe a data desejada (DD MM AAAA): ");
     scanf("%d %d %d", &d, &m, &a);
 
     printf("Informe o dia da semana correspondente (0-Domingo a 6-Sábado): ");
     scanf("%d", &diaSemanaFiltro);
 
-    system("cls");
-    printf("========================================\n");
+    limparTela();
+    imprimirSeparador();
     printf(" AGENDA PARA %02d/%02d/%d (%s)\n", d, m, a, diasSemanaStr[diaSemanaFiltro]);
-    printf("========================================\n");
+    imprimirSeparador();
 
-    // Exibir Rotinas Recorrentes para este dia da semana
-    printf("\n[ ROTINAS RECORRENTES ]\n");
+    /* Rotinas recorrentes do dia da semana */
+    puts("\n[ ROTINAS RECORRENTES ]");
     FILE *fileR = fopen(ARQ_ROTINAS, "rb");
-    if (fileR != NULL) {
+    if (!fileR) {
+        puts(" Nenhuma rotina cadastrada.");
+    } else {
         RotinaRecorrente r;
         int countR = 0;
-        while (fread(&r, sizeof(RotinaRecorrente), 1, fileR) == 1) {
-            if (r.diaSemana == diaSemanaFiltro) {
-                printf(" - %02d:%02d -> %s\n", r.hora, r.minuto, r.descricao);
-                countR++;
-            }
+
+        for (; fread(&r, sizeof(RotinaRecorrente), 1, fileR) == 1; ) {
+            if (r.diaSemana != diaSemanaFiltro) continue;
+            printf(" - %02d:%02d -> %s\n", r.hora, r.minuto, r.descricao);
+            countR++;
         }
         fclose(fileR);
-        if (countR == 0) printf(" Nenhuma rotina fixa para este dia.\n");
-    } else {
-        printf(" Nenhuma rotina cadastrada.\n");
+
+        if (!countR) puts(" Nenhuma rotina fixa para este dia.");
     }
 
-    // Exibir Compromissos Eventuais para esta data exata
-    printf("\n[ COMPROMISSOS PONTUAIS ]\n");
+    /* Compromissos eventuais da data exata */
+    puts("\n[ COMPROMISSOS PONTUAIS ]");
     FILE *fileC = fopen(ARQ_COMPROMISSOS, "rb");
-    if (fileC != NULL) {
+    if (!fileC) {
+        puts(" Nenhum compromisso cadastrado.");
+    } else {
         Compromisso c;
         int countC = 0;
-        while (fread(&c, sizeof(Compromisso), 1, fileC) == 1) {
-            if (c.dia == d && c.mes == m && c.ano == a) {
-                printf(" - %02d:%02d -> %s\n", c.hora, c.minuto, c.descricao);
-                countC++;
-            }
+
+        for (; fread(&c, sizeof(Compromisso), 1, fileC) == 1; ) {
+            if (c.dia != d || c.mes != m || c.ano != a) continue;
+            printf(" - %02d:%02d -> %s\n", c.hora, c.minuto, c.descricao);
+            countC++;
         }
         fclose(fileC);
-        if (countC == 0) printf(" Nenhum compromisso pontual nesta data.\n");
-    } else {
-        printf(" Nenhum compromisso cadastrado.\n");
+
+        if (!countC) puts(" Nenhum compromisso pontual nesta data.");
     }
-    printf("========================================\n\n");
-    system("pause");
+
+    imprimirSeparador();
+    printf("\n");
+    pausar();
 }
