@@ -4,7 +4,7 @@
 #include "compromissos.h"
 #include "rotinas.h"
 
-/* ---------- Cadastro ---------- */
+// ---------- Cadastro ---------- //
 
 void cadastrarCompromisso() {
     Compromisso c;
@@ -40,7 +40,7 @@ void salvarCompromissoNoArquivo(Compromisso c) {
     pausar();
 }
 
-/* ---------- Listagem ---------- */
+// ---------- Listagem ---------- //
 
 void listarCompromissos() {
     limparTela();
@@ -73,7 +73,7 @@ void listarCompromissos() {
     pausar();
 }
 
-/* ---------- Agenda do dia ---------- */
+// ---------- Agenda do dia ---------- //
 
 void visualizarAgendaDia() {
     int d, m, a, diaSemanaFiltro;
@@ -92,7 +92,7 @@ void visualizarAgendaDia() {
     printf(" AGENDA PARA %02d/%02d/%d (%s)\n", d, m, a, diasSemanaStr[diaSemanaFiltro]);
     imprimirSeparador();
 
-    /* Rotinas recorrentes do dia da semana */
+    // Rotinas recorrentes do dia da semana //
     puts("\n[ ROTINAS RECORRENTES ]");
     FILE *fileR = fopen(ARQ_ROTINAS, "rb");
     if (!fileR) {
@@ -111,7 +111,7 @@ void visualizarAgendaDia() {
         if (!countR) puts(" Nenhuma rotina fixa para este dia.");
     }
 
-    /* Compromissos eventuais da data exata */
+    // Compromissos eventuais da data exata //
     puts("\n[ COMPROMISSOS PONTUAIS ]");
     FILE *fileC = fopen(ARQ_COMPROMISSOS, "rb");
     if (!fileC) {
