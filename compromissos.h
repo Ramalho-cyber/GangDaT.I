@@ -16,9 +16,9 @@ typedef struct {
     char descricao[MAX_DESC];  /* texto do compromisso */
 } Compromisso;
 
-void cadastrarCompromisso(void);                /* lê os dados do usuário e salva */
-void listarCompromissos(void);                  /* mostra todos os compromissos salvos */
+void cadastrarCompromisso();                /* lê os dados do usuário e salva */
+void listarCompromissos();                  /* mostra todos os compromissos salvos */
 void salvarCompromissoNoArquivo(Compromisso c); /* grava um compromisso no final do arquivo */
-void visualizarAgendaDia(void);                 /* mostra os compromissos de uma data */
+void visualizarAgendaDia();                 /* mostra os compromissos de uma data */
 
 #endif
