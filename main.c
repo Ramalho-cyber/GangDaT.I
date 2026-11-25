@@ -11,7 +11,7 @@ int main() {
     do {
         system("cls"); // Limpa a tela ao retornar ao menu principal
         printf("========================================\n");
-        printf("       📅 SCHEDULA - AGENDA INTELIGENTE   \n");
+        printf("        SCHEDULA - AGENDA INTELIGENTE   \n");
         printf("========================================\n");
         printf("1. Cadastrar Atividade Recorrente\n");
         printf("2. Listar Rotinas Recorrentes\n");
