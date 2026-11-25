@@ -20,10 +20,10 @@ int main() {
         printf("5. Visualizar Agenda Integrada do Dia\n");
         printf("0. Sair\n");
         printf("----------------------------------------\n");
-        printf("Escolha sua opção: ");
+        printf("Escolha sua opcao: ");
         
         if (scanf("%d", &opcao) != 1) {
-            printf("\n[Erro] Entrada inválida! Digite um número.\n");
+            printf("\n[Erro] Entrada invalida! Digite um numero.\n");
             system("pause");
             continue;
         }
@@ -46,10 +46,10 @@ int main() {
                 break;
             case 0:
                 system("cls");
-                printf("\nEncerrando o Schedula. Até logo!\n");
+                printf("\nEncerrando o Schedula. Ate logo!\n");
                 break;
             default:
-                printf("\n[Erro] Opção inválida! Tente novamente.\n");
+                printf("\n[Erro] Opçao invalida! Tente novamente.\n");
                 system("pause");
         }
     } while (opcao != 0);
